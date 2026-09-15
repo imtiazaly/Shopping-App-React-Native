@@ -19,7 +19,7 @@ const Details = ({ route }: DetailsProps) => {
 
           <View style={[styles.rowContainer, styles.ratingContainer]}>
             <View style={styles.rating}>
-              <Text style={styles.ratingText}>{product.rating} ⭐</Text>
+              <Text style={styles.ratingText}>{product.rating} ⭐⭐⭐</Text>
             </View>
             <Text style={styles.ratingCount}>
               {product.ratingCount.toLocaleString()}
