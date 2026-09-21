@@ -1,97 +1,160 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🛍️ Shopping App - React Native E-Commerce Store UI
 
-# Getting Started
+A modern, responsive, and full-featured React Native E-Commerce UI application built with TypeScript, React Navigation Native Stack, category filtering, product rating indicators, discount badge calculations, and detailed product view flows.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Developed as part of a **Mobile App Development & React Native Learning Series**.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📱 App Screenshots / Demo Preview
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+<div align="center">
 
-```sh
-# Using npm
-npm start
+| Trending Products List | Product Details View |
+| :---: | :---: |
+| <img src="./assets/shop1.PNG" width="260" alt="Trending Products List Preview" /> | <img src="./assets/shop2.PNG" width="260" alt="Product Details View Preview" /> |
 
-# OR using Yarn
-yarn start
+</div>
+
+---
+
+## ✨ Key Features
+
+- 🛒 **Trending Products Catalog**: Clean FlatList catalog displaying product cards with image preview, ratings, original price vs. discounted price, and discount percentage pills.
+- 🏷️ **Category Filter Chips**: Filter products dynamically by category (e.g. Headphones, Audio, Accessories).
+- 📦 **Type-Safe Product Navigation**: Passes full product data models (`Product` interface) cleanly across screens using `@react-navigation/native-stack`.
+- 🔍 **Rich Product Details Screen**: Includes full product image banners, rating breakdown badges, price savings computation, stock status, specs list, and product tags.
+- 🛍️ **Shopping Cart Indicator**: Header integration featuring an interactive cart badge counter component.
+- 🎨 **Modern Light Theme & Typography**: Custom theme configuration (`#6C5CE7` primary accent color, clean cards, and smooth slide transitions).
+
+---
+
+## 🛠️ Tech Stack & Tools
+
+- **Framework**: [React Native](https://reactnative.dev/) (v0.87.1)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Navigation Library**: [@react-navigation/native](https://reactnavigation.org/) (v7) & [@react-navigation/native-stack](https://reactnavigation.org/docs/native-stack-navigator/)
+- **UI Components**: React Native Core (`FlatList`, `Image`, `Pressable`, `Text`, `View`, `ScrollView`, `StatusBar`), `react-native-safe-area-context`, `react-native-screens`
+- **Build Tools**: Metro Bundler, Babel, ESLint, Prettier
+
+---
+
+## 🚀 Getting Started
+
+Follow these instructions to set up and run the application on your local machine or emulator.
+
+### Prerequisites
+
+Ensure your React Native development environment is ready:
+- **Node.js**: `>= 22.11.0`
+- **npm** or **yarn**
+- **Android Studio** (for Android Emulator) or **Xcode** (macOS only, for iOS Simulator)
+
+### Installation
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/imtiazaly/Shopping-App-React-Native.git
+   cd Shopping-App-React-Native
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start Metro Bundler**
+   ```bash
+   npm start
+   ```
+
+4. **Run the App**
+   - **Android**:
+     ```bash
+     npm run android
+     ```
+   - **iOS**:
+     ```bash
+     cd ios && pod install && cd ..
+     npm run ios
+     ```
+
+---
+
+## 🧠 Data Architecture & Code Examples
+
+### 1. Product Interface (`src/App.tsx`)
+```typescript
+export interface Product {
+  id: string;
+  name: string;
+  imageUrl: string;
+  originalPrice: number;
+  discountPrice: number;
+  offerPercentage: number;
+  rating: number;
+  ratingCount: number;
+  tags: string[];
+  category: string;
+  brand: string;
+}
+
+export type RootStackParamList = {
+  Home: undefined;
+  Details: { product: Product };
+};
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+### 2. Header Cart Badge Component
+```typescript
+const CartIcon = ({ count = 0 }: { count?: number }) => (
+  <Pressable style={styles.cartWrap} hitSlop={8}>
+    <Text style={styles.cartEmoji}>🛒</Text>
+    {count > 0 && (
+      <View style={styles.cartBadge}>
+        <Text style={styles.cartBadgeText}>{count}</Text>
+      </View>
+    )}
+  </Pressable>
+);
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 📂 Project Structure
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```text
+Shopping-App-React-Native/
+├── assets/                  # App preview screenshots (shop1.PNG, shop2.PNG)
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   ├── CategoryChip.tsx # Category filter chip
+│   │   ├── ProductItem.tsx  # Product card item component
+│   │   └── Separator.tsx    # List item separator
+│   ├── data/
+│   │   └── contents.ts      # Mock product dataset & categories
+│   ├── screens/
+│   │   ├── Home.tsx         # Catalog screen with category filters & FlatList
+│   │   └── Details.tsx      # Comprehensive product detail screen
+│   └── App.tsx              # Root Stack Navigator & theme setup
+├── index.js                 # App entry point
+├── package.json             # Project dependencies and scripts
+├── tsconfig.json            # TypeScript configuration
+└── README.md                # Project documentation
 ```
 
-Then, and every time you update your native dependencies, run:
+---
 
-```sh
-bundle exec pod install
-```
+## 👨‍💻 Learning Objectives
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+This project was built to explore and implement real-world E-Commerce mobile UI patterns:
+- Architecting structured product datasets and TypeScript interfaces.
+- Efficient list rendering with `FlatList` and modular card components (`ProductItem`).
+- Type-safe object parameter passing across stack screens.
+- Crafting clean shopping UI components (rating badges, price comparison, cart counters).
 
-```sh
-# Using npm
-npm run ios
+---
 
-# OR using Yarn
-yarn ios
-```
+## 📄 License
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is open-source and available under the [MIT License](LICENSE).
